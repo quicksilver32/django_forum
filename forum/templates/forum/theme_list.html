@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <a href="{% url 'index' %}">Home</a>
+    <h1>Список тем</h1>
+    {% if theme_list %}
+        <ul>
+        {% for theme in theme_list %}
+            <li>
+            <a href="{{ theme.get_absolute_url }}">{{ theme.name }}</a>{% if perms.forum.delete_theme %} <a href="{% url 'theme_delete' pk=theme.id %}">Удалить</a> {% endif %}
+            </li>
+        {% endfor %}
+
+        </ul>
+
+        {% else %}
+        <p>Пока тут пусто(</p>
+    {% endif %}
+{% endblock %}

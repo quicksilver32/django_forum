@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}<title>Профиль</title>{% endblock %}
+
+{% block content %}
+    <p>Имя пользователя: {{ username }}</p>
+    <p>Имя: {{ first_name }}</p>
+    <p>Фамилия: {{ last_name }}</p>
+    <p>Адрес: {{ email }}</p>
+    <a href="{% url 'change_profile' %}" style="border: 1px solid #333; display: inline-block; padding: 5px 15px;
+                                                text-decoration: none; color: #000;"> Изменить данные</a>
+
+{% endblock %}
+

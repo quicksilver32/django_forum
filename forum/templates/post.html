@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block title %}<title>{{post.name}}</title>{% endblock %}
+
+{% block content %}
+    <a href="{% url 'index' %}">Домой</a> → <a href="{% url 'theme-detail' pk=post.theme_id %}">{{post.theme}}</a> → <a href="{% url 'post-detail' pk=post.id %}">{{post.name}}</a>
+    <h1>{{post.name}}</h1>
+    <p>{{post.text}}</p>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Ответы</h4>
+        {% for comm in comments %}
+            <hr />
+            <p>{{comm.author}}: {{ comm.text }}   {{comm.post_time}}</p> {% if perms.forum.delete_comment %} <a href="{% url 'comm_delete' pk=comm.id %}">Удалить</a> {% endif %}
+        {% endfor %}
+    </div>
+    {% if request.user.is_authenticated %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <table>
+            {{ form }}
+            </table>
+            <input type="submit" value="Отправить" />
+        </form>
+    {% endif %}
+{% endblock %}

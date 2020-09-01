@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+
+{% block style %}
+    <style type="text/css">
+        table {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        font-size: 14px;
+        background: white;
+        max-width: 70%;
+        width: 70%;
+        border-collapse: collapse;
+        text-align: left;
+        }
+        th {
+        font-weight: normal;
+        color: #039;
+        border-bottom: 2px solid #6678b1;
+        padding: 10px 8px;
+        }
+        td {
+        color: #669;
+        border-top: 1px solid #e8edff;
+        padding: 10px 15px;
+        }
+        tr:hover td {background: #e8edff;}
+    </style>
+{% endblock %}
+
+{% block title %}<title>{{theme.name}}</title>{% endblock %}
+
+{% block content %}
+    <a href="{% url 'index' %}">Домой</a> → <a href="{% url 'theme-detail' pk=theme.id %}">{{theme.name}}</a>
+    <h1>{{ theme.name }}</h1>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Посты</h4>
+        <table>
+            <th>Заголовок</th>
+            <th>Кол-во сообщений</th>
+            <th></th>
+            {% for post in theme.post_set.all %}
+                <tr>
+                    <td>
+                        <p><a href="{% url 'post-detail' pk=post.id%}">{{ post.name }}</a></p>
+                    </td>
+                    <td>
+                        <p>{{post.comment_set.count}}</p>
+                    </td>
+                    <td>
+                        {% if perms.forum.delete_post %} <a href="{% url 'post_delete' pk=post.id %}">Удалить</a>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
